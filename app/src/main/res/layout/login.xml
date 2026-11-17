@@ -14,7 +14,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="80dp"
-        android:text="欢迎来到你的诗词天地"
+        android:text="登录"
         android:textSize="35sp"
         app:layout_constraintTop_toTopOf="parent"
         android:gravity="center"/>
