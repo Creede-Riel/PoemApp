@@ -23,14 +23,16 @@ class DBHelper (context: Context):
 
     }
 
-    fun register(username: String, password: String) {//注册把账号密码存入数据库
-        val values = ContentValues().apply {//这个是打包
+    //注册把账号密码存入数据库
+    fun register(username: String, password: String) {
+        val values = ContentValues().apply {
             put("username", username)
             put("password", password)
         }
-        writableDatabase.insert("users", null, values)//这个是插入数据
+        //这个是打包
+        writableDatabase.insert("users", null, values)
     }
-
+    //这个是插入数据
     fun checkLogin(username: String, password: String): Boolean {
         val cursor = writableDatabase.query(
             "users", null, "username = ?", arrayOf(username), null, null, null
@@ -39,11 +41,13 @@ class DBHelper (context: Context):
         if (!cursor.moveToFirst()) {
             cursor.close()
             return false
-        }//查找账号是否存在
+        }
+        //查找账号是否存在
 
         val dbPassword = cursor.getString(cursor.getColumnIndexOrThrow("password"))
         cursor.close()
-        return dbPassword == password//账号存在就去读取密码，检查登录时输入的密码是否注册时输入的密码相同
+        return dbPassword == password
+    //账号存在就去读取密码，检查登录时输入的密码是否注册时输入的密码相同
     }
 
 }
