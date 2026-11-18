@@ -1,4 +1,4 @@
-package com.example.poemapp.login
+package com.example.poemapp.UI
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,8 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.poemapp.R
 import com.example.poemapp.database.DBHelper
-import com.example.poemapp.mainactivity.MainActivity
-import com.example.poemapp.register.Register
 
 class Login : AppCompatActivity() {
     private lateinit var dbHelper: DBHelper

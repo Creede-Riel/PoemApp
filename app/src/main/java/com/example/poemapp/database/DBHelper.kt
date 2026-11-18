@@ -6,7 +6,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import androidx.core.content.contentValuesOf
-//创建数据库
+//创建储存用户账号密码的数据库
 class DBHelper (context: Context):
     SQLiteOpenHelper(context,"poem.db",null,1) {
     override fun onCreate(db: SQLiteDatabase) {

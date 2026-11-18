@@ -1,4 +1,4 @@
-package com.example.poemapp.register
+package com.example.poemapp.UI
 
 import android.os.Bundle
 import android.widget.Button
@@ -7,9 +7,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.poemapp.R
 import com.example.poemapp.database.DBHelper
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class Register : AppCompatActivity() {
     private lateinit var dbHelper: DBHelper
