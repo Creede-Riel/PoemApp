@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:paddingBottom="48dp" >
+
+        <!-- 标题 -->
+        <TextView
+            android:id="@+id/tvDetailTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="静夜思"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#1A1A1A" />
+
+        <!-- 作者 · 朝代 -->
+        <TextView
+            android:id="@+id/tvDetailAuthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="李白 · 唐代"
+            android:textSize="14sp"
+            android:textColor="#888888" />
+
+        <!-- 体裁 · 合集 -->
+        <TextView
+            android:id="@+id/tvDetailMeta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="五言绝句 · 唐诗三百首"
+            android:textSize="13sp"
+            android:textColor="#AAAAAA" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:background="#EEEEEE" />
+
+        <!-- 原文 -->
+        <TextView
+            android:id="@+id/tvDetailContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="床前明月光，疑是地上霜。"
+            android:textSize="18sp"
+            android:textColor="#1A1A1A"
+            android:lineSpacingExtra="10dp" />
+
+        <!-- 注释 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="【注释】"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#8BC34A" />
+
+        <TextView
+            android:id="@+id/tvDetailNotes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="疑：好像。"
+            android:textSize="15sp"
+            android:textColor="#444444"
+            android:lineSpacingExtra="6dp" />
+
+        <!-- 译文 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="【译文】"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#8BC34A" />
+
+        <TextView
+            android:id="@+id/tvDetailTranslate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="……"
+            android:textSize="15sp"
+            android:textColor="#444444"
+            android:lineSpacingExtra="6dp" />
+
+        <!-- 赏析 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="【赏析】"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#8BC34A" />
+
+        <TextView
+            android:id="@+id/tvDetailAppreciation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="……"
+            android:textSize="16sp"
+            android:textColor="#444444"
+            android:lineSpacingExtra="10dp" />
+
+        <!-- 作者简介 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="【作者】"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#8BC34A" />
+
+        <TextView
+            android:id="@+id/tvDetailAuthorBio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="……"
+            android:textSize="15sp"
+            android:textColor="#444444"
+            android:lineSpacingExtra="6dp" />
+
+    </LinearLayout>
+
+</ScrollView>

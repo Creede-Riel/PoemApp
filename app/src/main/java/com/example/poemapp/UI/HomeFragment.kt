@@ -1,5 +1,6 @@
 package com.example.poemapp.UI
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -19,9 +20,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         val rv = view.findViewById<RecyclerView>(R.id.rvPoems)//找到滑动列表
         rv.layoutManager = LinearLayoutManager(requireContext())//定义布局管理器进行排版
-        //绑定适配器
+        //绑定适配器，fragment获取到适配器传过来的poem后，执行逻辑：跳转到详情页
         rv.adapter = PoemAdapter(list){poem->
-           Log.d("PoemApp","点击了诗词${poem.title}")
+            val intent = Intent(requireContext(), DetailActivity::class.java)
+            intent.putExtra("poemId", poem.id)
+            startActivity(intent)
         }
     }
 }

@@ -144,5 +144,31 @@ class DBHelper (context: Context):
         return list
     }
 
+    //一个专门用于获取详情页诗词所有信息的函数
+    fun queryPoemById(id: String): Poem? {
+        val cursor = readableDatabase.query(
+            "poem", null, "id = ?", arrayOf(id), null, null, null
+        )
+        //按照传进去的id查询对应的诗词的全部数据
+        cursor.use { c ->
+            if (!c.moveToFirst()) return null
+            return Poem(
+                id = c.getString(c.getColumnIndexOrThrow("id")),
+                title = c.getString(c.getColumnIndexOrThrow("title")),
+                author = c.getString(c.getColumnIndexOrThrow("author")),
+                dynasty = c.getString(c.getColumnIndexOrThrow("dynasty")),
+                content = c.getString(c.getColumnIndexOrThrow("content")),
+                famousLine = c.getString(c.getColumnIndexOrThrow("famous_line")),
+                genre = c.getString(c.getColumnIndexOrThrow("genre")),
+                format = c.getString(c.getColumnIndexOrThrow("format")),
+                collection = c.getString(c.getColumnIndexOrThrow("collection")),
+                translate = c.getString(c.getColumnIndexOrThrow("translate")),
+                notes = c.getString(c.getColumnIndexOrThrow("notes")),
+                appreciation = c.getString(c.getColumnIndexOrThrow("appreciation")),
+                authorBio = c.getString(c.getColumnIndexOrThrow("author_bio"))
+            )
+        }
+    }
+
 }
 
