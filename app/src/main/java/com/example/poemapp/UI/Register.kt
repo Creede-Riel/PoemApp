@@ -6,7 +6,7 @@ import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.poemapp.R
-import com.example.poemapp.database.DBHelper
+import com.example.poemapp.Data.DBHelper
 
 class Register : AppCompatActivity() {
     private lateinit var dbHelper: DBHelper
