@@ -1,6 +1,7 @@
 package com.example.poemapp.UI
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +19,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         val rv = view.findViewById<RecyclerView>(R.id.rvPoems)//找到滑动列表
         rv.layoutManager = LinearLayoutManager(requireContext())//定义布局管理器进行排版
-        rv.adapter = PoemAdapter(list)//绑定适配器
+        //绑定适配器
+        rv.adapter = PoemAdapter(list){poem->
+           Log.d("PoemApp","点击了诗词${poem.title}")
+        }
     }
 }
 //这里只是一个装滑动列表的fragment

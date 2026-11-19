@@ -9,9 +9,10 @@ import com.example.poemapp.R
 import com.example.poemapp.model.Poem
 
 //建适配器
-class PoemAdapter(private val list: List<Poem>) :
+class PoemAdapter(private val list: List<Poem>,
+                  private val onClick: (Poem) -> Unit   ) :
     RecyclerView.Adapter<PoemAdapter.PoemViewHolder>() {
-
+    //加了一个回调函数，会把数据传给使用该适配器的fragment
     // ① 一共几条
     override fun getItemCount(): Int = list.size
 
@@ -31,6 +32,10 @@ class PoemAdapter(private val list: List<Poem>) :
         holder.tvTitle.text = poem.title
         holder.tvAuthor.text = "${poem.author} · ${poem.dynasty}"
         holder.tvContent.text = poem.famousLine.ifEmpty { poem.content }//没有名句就显示原文
+        holder.itemView.setOnClickListener {
+            onClick(poem)
+        }
+        //在塞数据的同时加入监听器，点击了诗词卡片，适配器就会把这首诗的数据传给HomeFragment
     }
 
     // ViewHolder：存好 findViewById 的结果，避免每次绑定都重新找，提前执行findviewbyid，把控件提前找到存起来
@@ -39,4 +44,6 @@ class PoemAdapter(private val list: List<Poem>) :
         val tvAuthor: TextView = itemView.findViewById(R.id.tvAuthor)
         val tvContent: TextView = itemView.findViewById(R.id.tvContent)
     }
+
+
 }
