@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.poemapp.Data.DBHelper
 import com.example.poemapp.R
 
+//先加载布局，直接把布局传进来
 class HomeFragment : Fragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -15,8 +16,9 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         val list = DBHelper(requireContext()).queryAllPoems()//调用DBhelper里面的函数把诗词数据交给list
 
-        val rv = view.findViewById<RecyclerView>(R.id.rvPoems)
-        rv.layoutManager = LinearLayoutManager(requireContext())
-        rv.adapter = PoemAdapter(list)
+        val rv = view.findViewById<RecyclerView>(R.id.rvPoems)//找到滑动列表
+        rv.layoutManager = LinearLayoutManager(requireContext())//定义布局管理器进行排版
+        rv.adapter = PoemAdapter(list)//绑定适配器
     }
 }
+//这里只是一个装滑动列表的fragment

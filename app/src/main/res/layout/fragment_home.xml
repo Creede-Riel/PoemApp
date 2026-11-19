@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <!-- 整个布局只放置一个标题和一个滑动列表  -->
     <TextView
         android:id="@+id/tvHeader"
         android:layout_width="wrap_content"
