@@ -20,8 +20,8 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, HomeFragment())
                 .commit()
-            val p = DBHelper(this).queryPoemById("5c22086397880d3b825c95c7")
-            Log.d("PoemApp", "标题=${p?.title} 赏析长度=${p?.appreciation?.length}")
+
+
         }
     }
 }

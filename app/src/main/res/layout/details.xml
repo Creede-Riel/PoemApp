@@ -11,6 +11,16 @@
         android:padding="24dp"
         android:paddingBottom="48dp" >
 
+        <TextView
+            android:id="@+id/btnBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:text="← 返回"
+            android:textSize="16sp"
+            android:textColor="#666666" />
+
         <!-- 标题 -->
         <TextView
             android:id="@+id/tvDetailTitle"
@@ -57,6 +67,15 @@
             android:textSize="18sp"
             android:textColor="#1A1A1A"
             android:lineSpacingExtra="10dp" />
+
+        <Button
+            android:id="@+id/btnSpeak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="🔊 朗读"
+            android:textSize="14sp"
+            android:backgroundTint="#9BD060"/>
 
         <!-- 注释 -->
         <TextView

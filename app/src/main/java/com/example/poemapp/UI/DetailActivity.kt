@@ -42,5 +42,9 @@ class DetailActivity : AppCompatActivity() {
             poem.translate.replace("\n", "\n\n")
         findViewById<TextView>(R.id.tvDetailNotes).text =
             poem.notes.replace("\n", "\n\n")
+
+        findViewById<TextView>(R.id.btnBack).setOnClickListener {
+            finish()          // 关掉自己，回到列表
+        }
     }
 }
