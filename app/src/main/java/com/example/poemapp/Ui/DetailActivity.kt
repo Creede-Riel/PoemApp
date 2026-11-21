@@ -1,4 +1,4 @@
-package com.example.poemapp.UI
+package com.example.poemapp.Ui
 
 import android.os.Bundle
 import android.widget.TextView

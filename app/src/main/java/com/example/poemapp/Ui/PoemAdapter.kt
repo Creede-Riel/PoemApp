@@ -1,4 +1,4 @@
-package com.example.poemapp.UI
+package com.example.poemapp.Ui
 
 import android.view.LayoutInflater
 import android.view.View
