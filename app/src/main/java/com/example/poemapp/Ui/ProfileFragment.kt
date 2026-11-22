@@ -39,6 +39,10 @@ class ProfileFragment : Fragment(R.layout.fragment_profile){
                 .show()
              }
 
+        //点击历史记录跳转到浏览记录界面
+        view.findViewById<TextView>(R.id.tvHistory).setOnClickListener {
+            startActivity(Intent(requireContext(), HistoryActivity::class.java))
+        }
          }
     }
 

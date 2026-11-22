@@ -57,6 +57,9 @@ class DetailActivity : AppCompatActivity() {
         // ② 拿到数据库对象（只要一次）
         val dbHelper = DBHelper(this)
 
+        //插一个，每次进入详情页就加浏览历史
+        dbHelper.addHistory(username,id)
+
         // ③ 查这一首有没有被收藏过
         favorited = dbHelper.isFavorite(username, id)
 

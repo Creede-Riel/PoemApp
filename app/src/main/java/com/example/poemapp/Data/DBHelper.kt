@@ -1,4 +1,4 @@
-package com.example.poemapp.Data
+﻿package com.example.poemapp.Data
 
 import android.content.ContentValues
 import android.content.Context
@@ -11,7 +11,7 @@ import java.util.Date
 import java.util.Locale
 
 class DBHelper(context: Context) :
-    SQLiteOpenHelper(context, "poem.db", null, 2) {
+    SQLiteOpenHelper(context, "poem.db", null, 3) {
 
     // ==================== 建表语句 ====================
 
@@ -54,13 +54,24 @@ class DBHelper(context: Context) :
         )
     """.trimIndent()
 
+    //创建用来装不同用户浏览历史的表
+    private val createHistory = """
+        create table history (
+            id integer primary key autoincrement,
+            username text,
+            poem_id text,
+            viewed_at text
+        )
+    """.trimIndent()
+
     // ==================== 建库 / 升级 ====================
 
-    // 数据库文件不存在时执行一次：把三张表一次建好
+    // 数据库文件不存在时执行一次：把四张表一次建好
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(createUsers)
         db.execSQL(createPoem)
         db.execSQL(createFavorite)
+        db.execSQL(createHistory)
     }
 
     // 数据库已存在、版本号变了时执行：老库补新表
@@ -68,6 +79,10 @@ class DBHelper(context: Context) :
         // 版本 1 -> 2：补上 favorite 表（users / poem 的数据都保留）
         if (oldVersion < 2) {
             db.execSQL(createFavorite)
+        }
+        // 版本 2 -> 3：补上 history 表（同上，老数据都保留）
+        if (oldVersion < 3) {
+            db.execSQL(createHistory)
         }
     }
 
@@ -217,7 +232,7 @@ class DBHelper(context: Context) :
         val values = ContentValues().apply {
             put("username", username)
             put("poem_id", poemId)
-            put("created_at", SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date()))
+            put("created_at", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date()))
         }
         //插入
         writableDatabase.insert("favorite", null, values)
@@ -253,6 +268,50 @@ class DBHelper(context: Context) :
             arrayOf(username)
         )
         val list = mutableListOf<Poem>()//准备一个可变的集合
+        cursor.use { c ->
+            while (c.moveToNext()) {
+                list.add(
+                    Poem(
+                        id = c.getString(c.getColumnIndexOrThrow("id")),
+                        title = c.getString(c.getColumnIndexOrThrow("title")),
+                        author = c.getString(c.getColumnIndexOrThrow("author")),
+                        dynasty = c.getString(c.getColumnIndexOrThrow("dynasty")),
+                        content = c.getString(c.getColumnIndexOrThrow("content")),
+                        famousLine = c.getString(c.getColumnIndexOrThrow("famous_line"))
+                    )
+                )
+            }
+        }
+        return list
+    }
+
+    // ==================== 浏览历史 ====================
+
+    //增添浏览记录的函数，包括去旧保新
+    fun addHistory(username: String, poemId: String) {
+        // 先删掉这首诗的旧记录（去重：同一首只留一条）
+        writableDatabase.delete(
+            "history",
+            "username = ? and poem_id = ?",
+            arrayOf(username, poemId)
+        )
+        // 再插入新的一条（时间是最新的）
+        val values = ContentValues().apply {
+            put("username", username)
+            put("poem_id", poemId)
+            put("viewed_at", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date()))
+        }
+        writableDatabase.insert("history", null, values)
+    }
+
+    //查询浏览记录里面的诗词（最近看的在最上面）
+    fun queryHistory(username: String): List<Poem> {
+        val cursor = readableDatabase.rawQuery(
+            "select p.* from poem p inner join history h on p.id = h.poem_id " +
+                    "where h.username = ? order by h.viewed_at desc, h.id desc",
+            arrayOf(username)
+        )
+        val list = mutableListOf<Poem>()
         cursor.use { c ->
             while (c.moveToNext()) {
                 list.add(
