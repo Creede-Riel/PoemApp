@@ -1,13 +1,15 @@
 package com.example.poemapp.Ui
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.poemapp.Data.DBHelper
 import com.example.poemapp.R
 
 class DetailActivity : AppCompatActivity() {
-
+    //留一个检查诗词收藏状态的变量
+    private var favorited = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.details)
@@ -46,5 +48,35 @@ class DetailActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.btnBack).setOnClickListener {
             finish()          // 关掉自己，回到列表
         }
+
+    //下面这段检索收藏表决定诗词详情页的收藏键的状态
+        // ① 拿当前用户
+        val username = getSharedPreferences("login_prefs", MODE_PRIVATE)
+            .getString("currentUser", "") ?: ""
+
+        // ② 拿到数据库对象（只要一次）
+        val dbHelper = DBHelper(this)
+
+        // ③ 查这一首有没有被收藏过
+        favorited = dbHelper.isFavorite(username, id)
+
+        // ④ 按状态设置按钮文字
+        val btnFavorite = findViewById<Button>(R.id.btnFavorite)
+        btnFavorite.text = if (favorited) "★ 已收藏" else "☆ 收藏"
+
+
+        //下面这段调用add和delate，在点击收藏键的时候加入或者取消收藏
+        btnFavorite.setOnClickListener {
+            if (favorited) {
+                dbHelper.removeFavorite(username, id)     // 取消收藏
+                favorited = false
+                btnFavorite.text = "☆ 收藏"
+            } else {
+                dbHelper.addFavorite(username, id)     // 添加收藏
+                favorited = true
+                btnFavorite.text = "★ 已收藏"
+            }
+        }
     }
+
 }
