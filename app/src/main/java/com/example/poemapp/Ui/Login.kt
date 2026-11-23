@@ -2,9 +2,11 @@ package com.example.poemapp.Ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -26,6 +28,9 @@ class Login : AppCompatActivity() {
         dbHelper = DBHelper(this)
         val etAccount=findViewById<EditText>(R.id.etAccount)
         val etPassword=findViewById<EditText>(R.id.etPassword)
+        //找到密码框之后设置眼睛的状态变量
+        var passwordVisible = false
+        // 现在密码是"隐藏"状态
         val btnLogin=findViewById<Button>(R.id.btnLogin)
         val cbRememberPassword=findViewById<CheckBox>(R.id.cbRememberPassword)
         cbRememberPassword.isChecked = !sp.getString("savedAccount", "").isNullOrEmpty()
@@ -69,6 +74,26 @@ class Login : AppCompatActivity() {
 
 
         }
+    //变换眼睛状态和密码可见状态
+        val ivToggle = findViewById<ImageView>(R.id.ivTogglePassword)
+        findViewById<ImageView>(R.id.ivTogglePassword).setOnClickListener {
+            passwordVisible = !passwordVisible        // 翻转状态
+
+            if (passwordVisible) {
+                // 显示明文
+                etPassword.inputType = InputType.TYPE_CLASS_TEXT
+                ivToggle.setImageResource(R.drawable.ic_visibility)
+            } else {
+                // 恢复成圆点
+                etPassword.inputType = InputType.TYPE_CLASS_TEXT or
+                        InputType.TYPE_TEXT_VARIATION_PASSWORD
+                ivToggle.setImageResource(R.drawable.ic_visibility_off)
+            }
+
+            // 光标挪到末尾（不然切换密码可见状态会自动跳回开头）
+            etPassword.setSelection(etPassword.text.length)
+        }
+
 
         val toGoToRegister=findViewById<TextView>(R.id.toGoToRegister)
         toGoToRegister.setOnClickListener {

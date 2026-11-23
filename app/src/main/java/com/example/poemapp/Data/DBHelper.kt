@@ -11,7 +11,7 @@ import java.util.Date
 import java.util.Locale
 
 class DBHelper(context: Context) :
-    SQLiteOpenHelper(context, "poem.db", null, 3) {
+    SQLiteOpenHelper(context, "poem.db", null, 4) {
 
     // ==================== 建表语句 ====================
 
@@ -20,7 +20,8 @@ class DBHelper(context: Context) :
         create table users(
             id integer primary key autoincrement,
             username text,
-            password text
+            password text,
+            nickname text      
         )
     """.trimIndent()
 
@@ -84,6 +85,10 @@ class DBHelper(context: Context) :
         if (oldVersion < 3) {
             db.execSQL(createHistory)
         }
+        //版本3 -> 4，给用户表加上昵称列
+        if (oldVersion < 4) {
+            db.execSQL("alter table users add column nickname text")
+        }
     }
 
     // ==================== 用户 ====================
@@ -114,6 +119,38 @@ class DBHelper(context: Context) :
         val dbPassword = cursor.getString(cursor.getColumnIndexOrThrow("password"))
         cursor.close()
         return dbPassword == password
+    }
+
+    //修改密码
+    fun updatePassword(username: String, newPassword: String) {
+        val values = ContentValues().apply {
+            put("password", newPassword)
+        }
+        writableDatabase.update(
+            "users",
+            values,
+            "username = ?",
+            arrayOf(username)
+        )
+    }
+
+    //查昵称（没有就返回空字符串）
+    fun getNickname(username: String): String {
+        val cursor = readableDatabase.query(
+            "users", arrayOf("nickname"), "username = ?", arrayOf(username), null, null, null
+        )
+        cursor.use { c ->
+            if (!c.moveToFirst()) return ""
+            return c.getString(c.getColumnIndexOrThrow("nickname")) ?: ""
+        }
+    }
+
+    //改昵称
+    fun updateNickname(username: String, nickname: String) {
+        val values = ContentValues().apply {
+            put("nickname", nickname)
+        }
+        writableDatabase.update("users", values, "username = ?", arrayOf(username))
     }
 
     // ==================== 诗词：导入 / 查询 ====================
@@ -295,7 +332,7 @@ class DBHelper(context: Context) :
             "username = ? and poem_id = ?",
             arrayOf(username, poemId)
         )
-        // 再插入新的一条（时间是最新的）
+        // 再插入新的一条（时间是最新的），精确到秒
         val values = ContentValues().apply {
             put("username", username)
             put("poem_id", poemId)
@@ -328,4 +365,17 @@ class DBHelper(context: Context) :
         }
         return list
     }
+
+    //清空这个用户的浏览历史
+    fun clearHistory(username: String) {
+        writableDatabase.delete(
+            "history",
+            "username = ?",
+            arrayOf(username)
+        )
+    }
+
+
+
+
 }

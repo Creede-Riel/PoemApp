@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -49,6 +51,20 @@ class HistoryActivity : AppCompatActivity() {
             val intent = Intent(this, DetailActivity::class.java)
             intent.putExtra("poemId", poem.id)
             startActivity(intent)
+        }
+
+        findViewById<TextView>(R.id.btnClear).setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("清空浏览历史")
+                .setMessage("确定要清空所有浏览记录吗？")
+                .setPositiveButton("清空") { _, _ ->
+                    DBHelper(this).clearHistory(username)
+                    //上面已经把数据库里面的历史记录清空了，要重新刷新一下界面，不然界面会保留清空之前的样子
+                    refreshList()
+                    Toast.makeText(this, "已清空", Toast.LENGTH_SHORT).show()
+                }
+                .setNegativeButton("取消", null)
+                .show()
         }
     }
 
