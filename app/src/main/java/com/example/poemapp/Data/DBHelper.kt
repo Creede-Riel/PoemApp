@@ -2,13 +2,25 @@
 
 import android.content.ContentValues
 import android.content.Context
+import android.content.Intent
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.view.View
+import androidx.core.content.ContextCompat.startActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.poemapp.R
+import com.example.poemapp.Ui.DetailActivity
+import com.example.poemapp.Ui.PoemAdapter
 import com.example.poemapp.model.Poem
 import org.json.JSONArray
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+
+
+
+private lateinit var db: DBHelper
 
 class DBHelper(context: Context) :
     SQLiteOpenHelper(context, "poem.db", null, 4) {
@@ -375,7 +387,49 @@ class DBHelper(context: Context) :
         )
     }
 
+// ==================== 筛选功能 ====================
+
+    //查出数据库里一共有哪些朝代（去重）
+    fun queryAllDynasties(): List<String> {
+        val list = mutableListOf<String>()
+        val cursor = readableDatabase.rawQuery(
+            "select distinct dynasty from poem",
+            null
+        )
+        cursor.use { c ->
+            while (c.moveToNext()) {
+                list.add(c.getString(c.getColumnIndexOrThrow("dynasty")))
+            }
+        }
+        return list
+    }
 
 
+    //查诗词对应的朝代
+    fun queryPoemsByDynasty(dynasty: String): List<Poem> {
+        val list = mutableListOf<Poem>()
+        val cursor = readableDatabase.query(
+            "poem",
+            arrayOf("id", "title", "author", "dynasty", "content", "famous_line"),
+            "dynasty = ?",
+            arrayOf(dynasty),
+            null, null, null
+        )
+        cursor.use { c ->
+            while (c.moveToNext()) {
+                list.add(
+                    Poem(
+                        id = c.getString(c.getColumnIndexOrThrow("id")),
+                        title = c.getString(c.getColumnIndexOrThrow("title")),
+                        author = c.getString(c.getColumnIndexOrThrow("author")),
+                        dynasty = c.getString(c.getColumnIndexOrThrow("dynasty")),
+                        content = c.getString(c.getColumnIndexOrThrow("content")),
+                        famousLine = c.getString(c.getColumnIndexOrThrow("famous_line"))
+                    )
+                )
+            }
+        }
+        return list
+    }
 
 }

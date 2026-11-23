@@ -82,6 +82,11 @@ class ProfileFragment : Fragment(R.layout.fragment_profile){
                         return@setPositiveButton
                     }
 
+                    if (DBHelper(requireContext()).checkLogin(username, newPassword)) {
+                        Toast.makeText(requireContext(), "新密码不能与旧密码相同", Toast.LENGTH_SHORT).show()
+                        return@setPositiveButton
+                    }
+
                     // ⑤ 改数据库
                     DBHelper(requireContext()).updatePassword(username, newPassword)
                     Toast.makeText(requireContext(), "密码已修改，下次登录生效", Toast.LENGTH_SHORT).show()
@@ -99,7 +104,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile){
 
             // ① 动态创建一个输入框
             val input = EditText(requireContext())
-            input.hint = "请输入新昵称"
+            input.hint = "请输入新昵称（不得大于9个字）"
 
             // ② 包一层容器，给输入框加左右边距（不加会贴着弹窗边缘）
             val container = LinearLayout(requireContext())
