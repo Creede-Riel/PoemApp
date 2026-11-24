@@ -27,6 +27,9 @@
             android:name=".Ui.DetailActivity"
             android:launchMode="singleTop" />
         <activity android:name=".Ui.HistoryActivity" />
+        <activity
+            android:name=".Ui.SearchActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

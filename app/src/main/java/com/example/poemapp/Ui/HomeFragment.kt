@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import android.view.View
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -98,6 +99,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             currentDynasty = if (selected == "全部") null else selected
             refreshList()
         }
+        //跳转到搜索页
+        view.findViewById<EditText>(R.id.etSearchBar).setOnClickListener {
+            startActivity(Intent(requireContext(), SearchActivity::class.java))
+        }
     }
 
     // 查数据 + 刷新列表（点 chip 后会再次调用）
@@ -124,5 +129,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         v.findViewById<View>(R.id.cardDaily).visibility =
             if (currentDynasty == null) View.VISIBLE else View.GONE
     }
+
 }
-//这里只是一个装滑动列表的fragment
+
+

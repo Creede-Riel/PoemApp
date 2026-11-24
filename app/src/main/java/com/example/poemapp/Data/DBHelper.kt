@@ -1,4 +1,4 @@
-﻿package com.example.poemapp.Data
+package com.example.poemapp.Data
 
 import android.content.ContentValues
 import android.content.Context
@@ -262,6 +262,7 @@ class DBHelper(context: Context) :
                 genre = c.getString(c.getColumnIndexOrThrow("genre")),
                 format = c.getString(c.getColumnIndexOrThrow("format")),
                 collection = c.getString(c.getColumnIndexOrThrow("collection")),
+                theme = c.getString(c.getColumnIndexOrThrow("theme")),
                 translate = c.getString(c.getColumnIndexOrThrow("translate")),
                 notes = c.getString(c.getColumnIndexOrThrow("notes")),
                 appreciation = c.getString(c.getColumnIndexOrThrow("appreciation")),
@@ -281,7 +282,10 @@ class DBHelper(context: Context) :
         val values = ContentValues().apply {
             put("username", username)
             put("poem_id", poemId)
-            put("created_at", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date()))
+            put(
+                "created_at",
+                SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
+            )
         }
         //插入
         writableDatabase.insert("favorite", null, values)
@@ -348,7 +352,10 @@ class DBHelper(context: Context) :
         val values = ContentValues().apply {
             put("username", username)
             put("poem_id", poemId)
-            put("viewed_at", SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date()))
+            put(
+                "viewed_at",
+                SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
+            )
         }
         writableDatabase.insert("history", null, values)
     }
@@ -432,4 +439,32 @@ class DBHelper(context: Context) :
         return list
     }
 
+    // ==================== 搜索功能 ====================
+    //按关键词搜索（标题 / 作者 / 正文）
+    fun queryPoemsByKeyword(keyword: String): List<Poem> {
+        val list = mutableListOf<Poem>()
+        val pattern = "%$keyword%"
+        val cursor = readableDatabase.query(
+            "poem",
+            arrayOf("id", "title", "author", "dynasty", "content", "famous_line"),
+            "title like? or author like? or content like?",
+            arrayOf(pattern, pattern, pattern),
+            null, null, null
+        )
+        cursor.use { c ->
+            while (c.moveToNext()) {
+                list.add(
+                    Poem(
+                        id = c.getString(c.getColumnIndexOrThrow("id")),
+                        title = c.getString(c.getColumnIndexOrThrow("title")),
+                        author = c.getString(c.getColumnIndexOrThrow("author")),
+                        dynasty = c.getString(c.getColumnIndexOrThrow("dynasty")),
+                        content = c.getString(c.getColumnIndexOrThrow("content")),
+                        famousLine = c.getString(c.getColumnIndexOrThrow("famous_line"))
+                    )
+                )
+            }
+        }
+        return list
+    }
 }

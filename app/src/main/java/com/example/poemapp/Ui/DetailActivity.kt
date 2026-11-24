@@ -1,13 +1,19 @@
 package com.example.poemapp.Ui
 
+import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.speech.tts.TextToSpeech
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.poemapp.Data.DBHelper
 import com.example.poemapp.R
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import java.util.Locale
 
 class DetailActivity : AppCompatActivity() {
@@ -105,6 +111,35 @@ class DetailActivity : AppCompatActivity() {
                 btnFavorite.text = "★ 已收藏"
             }
         }
+
+//把诗词的标签拆成小部分放进chip里
+        val tags = poem.theme.split("、").filter { it.isNotBlank() }
+
+        val chipTags = findViewById<ChipGroup>(R.id.chipTags)
+        val tvTagLabel = findViewById<TextView>(R.id.tvTagLabel)
+        chipTags.removeAllViews()
+
+        if (tags.isEmpty()) {
+            chipTags.visibility = View.GONE
+            tvTagLabel.visibility = View.GONE
+        } else {
+            chipTags.visibility = View.VISIBLE
+            tvTagLabel.visibility = View.VISIBLE
+
+            tags.forEach { tag ->
+                val chip = Chip(this)
+                chip.text = tag
+                chip.isCheckable = false
+                chip.isClickable = false
+                chip.textSize = 12f
+                chip.chipBackgroundColor = ColorStateList.valueOf(Color.parseColor("#EFEFEF"))
+                chip.setTextColor(Color.parseColor("#555555"))
+                chip.setPadding(8, 0, 8, 0)
+                chip.chipStrokeWidth = 0f
+                chipTags.addView(chip)
+            }
+        }
+        chipTags.visibility = if (tags.isEmpty()) View.GONE else View.VISIBLE
             }
 
     //释放资源

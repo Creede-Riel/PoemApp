@@ -11,6 +11,7 @@ data class Poem(
     val genre: String = "",
     val format: String = "",
     val collection: String = "",
+    val theme: String = "",
     val translate: String = "",
     val notes: String = "",
     val appreciation: String = "",
