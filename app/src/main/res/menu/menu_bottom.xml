@@ -14,6 +14,12 @@
     <item
         android:id="@+id/tabProfile"
         android:icon="@android:drawable/ic_menu_manage"
-        android:title="我的" />
+        android:title="我的"/>
+
+    <item
+        android:id="@+id/tabFind"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="发现"
+        />
 
 </menu>

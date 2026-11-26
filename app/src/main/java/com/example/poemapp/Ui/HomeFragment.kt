@@ -99,10 +99,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
             currentDynasty = if (selected == "全部") null else selected
             refreshList()
         }
-        //跳转到搜索页
-        view.findViewById<EditText>(R.id.etSearchBar).setOnClickListener {
-            startActivity(Intent(requireContext(), SearchActivity::class.java))
-        }
+
+
     }
 
     // 查数据 + 刷新列表（点 chip 后会再次调用）

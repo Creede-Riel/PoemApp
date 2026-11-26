@@ -43,6 +43,11 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().
                     replace(R.id.fragmentContainer, ProfileFragment()).
                     commit()
+
+                R.id.tabFind ->
+                    supportFragmentManager.beginTransaction().
+                    replace(R.id.fragmentContainer, FindFragment()).
+                    commit()
             }
             true
             //要记得返回true，不然点击tab会没有反应
