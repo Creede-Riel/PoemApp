@@ -1,10 +1,12 @@
 package com.example.poemapp.Ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.poemapp.Data.DBHelper
@@ -22,6 +24,11 @@ class Register : AppCompatActivity() {
         val etAccount = findViewById<EditText>(R.id.etAccount)
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val btnRegister = findViewById<Button>(R.id.btnLogin)
+        val tvtoGoToLogin =findViewById<TextView>(R.id.toGoToLogin)
+        tvtoGoToLogin.setOnClickListener {
+            val intent= Intent(this, Login::class.java)
+            startActivity(intent)
+        }
         //变换眼睛状态和密码可见状态
         //找到密码框之后设置眼睛的状态变量
         var passwordVisible = false
