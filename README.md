@@ -11,7 +11,9 @@
 
 - **账号体系**
   - 独立登录页、注册页
-  - 多用户支持（SQLite `users` 表，可注册任意多个账号）
+  - 多用户支持（SQLite `users` 表，可注册任意多个账号，账号查重）
+  - 密码可见切换（眼睛图标，登录页与注册页均支持）
+  - 注册页输入提示（账号 ≤ 12 位、密码 ≥ 6 位，规则前置告知）
   - 记住密码（复选可选）
   - 已登录自动跳过登录页
   - 退出登录（二次确认弹窗）
@@ -39,9 +41,9 @@
 
 ## 截图
 
-| 登录 | 诗词列表 |
+| 登录 | 注册 |
 |---|---|
-| ![登录](screenshots/login.png) | ![诗词列表](screenshots/list.png) |
+| ![登录](screenshots/login.png) | ![注册](screenshots/register.png) |
 
 | 首页（默认） | 按朝代筛选 |
 |---|---|
@@ -59,17 +61,17 @@
 |---|---|
 | ![收藏详情](screenshots/detail_fav.png) | ![收藏列表](screenshots/favorite.png) |
 
-| 浏览历史 |
-|---|
-| ![浏览历史](screenshots/history.png) |
+| 浏览历史 | 历史为空（清空后） |
+|---|---|
+| ![浏览历史](screenshots/history.png) | ![历史为空](screenshots/history_empty.png) |
 
 | 密码可见切换 | 关于 |
 |---|---|
 | ![密码可见](screenshots/login_visible.png) | ![关于](screenshots/about.png) |
 
-| 退出登录（二次确认） |
-|---|
-| ![退出确认](screenshots/logout-dialog.png) |
+| 退出登录（二次确认） | 诗词列表 |
+|---|---|
+| ![退出确认](screenshots/logout-dialog.png) | ![诗词列表](screenshots/list.png) |
 
 ---
 
@@ -144,6 +146,7 @@ app/src/main/
 | 2026-11-23 | 完成昵称修改、清空浏览历史、密码可见切换、关于页面 |
 | 2026-11-23 | 首页改版：搜索入口、动态问候语、按朝代筛选（ChipGroup） |
 | 2026-11-24 | 完成关键词搜索页（like 模糊查询，实时搜索）；详情页新增主题标签 |
+| 2026-11-26 | 修复注册重复提交与空用户名问题；登录页预填改为 onResume；补齐注册页输入提示与密码可见切换 |
 
 ---
 
