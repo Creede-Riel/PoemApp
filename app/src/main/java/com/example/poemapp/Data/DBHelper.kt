@@ -115,7 +115,7 @@ class DBHelper(context: Context) :
         //插入数据
         writableDatabase.insert("users", null, values)
     }
-
+//检查登录时是否已经存在该账号
     fun checkLogin(username: String, password: String): Boolean {
         val cursor = writableDatabase.query(
             "users", null, "username = ?", arrayOf(username), null, null, null
@@ -131,6 +131,16 @@ class DBHelper(context: Context) :
         val dbPassword = cursor.getString(cursor.getColumnIndexOrThrow("password"))
         cursor.close()
         return dbPassword == password
+    }
+
+    //判断用户名是否已被注册（用户账号唯一性）
+    fun isUserExists(username: String): Boolean {
+        val cursor = readableDatabase.query(
+            "users", arrayOf("username"), "username = ?", arrayOf(username), null, null, null
+        )
+        cursor.use { c ->
+            return c.moveToFirst()      // 有一行 = 已存在
+        }
     }
 
     //修改密码

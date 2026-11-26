@@ -104,7 +104,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile){
 
             // ① 动态创建一个输入框
             val input = EditText(requireContext())
-            input.hint = "请输入新昵称（不得大于9个字）"
+            input.hint = "请输入新昵称（不得大于12个字）"
 
             // ② 包一层容器，给输入框加左右边距（不加会贴着弹窗边缘）
             val container = LinearLayout(requireContext())
@@ -124,7 +124,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile){
                         return@setPositiveButton
                     }
                     if (newNickname.length > 9) {
-                        Toast.makeText(requireContext(), "昵称不得大于9个字", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "昵称不得大于12个字", Toast.LENGTH_SHORT).show()
                         return@setPositiveButton
                     }
 

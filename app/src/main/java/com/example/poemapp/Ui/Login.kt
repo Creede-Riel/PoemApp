@@ -15,6 +15,10 @@ import com.example.poemapp.Data.DBHelper
 
 class Login : AppCompatActivity() {
     private lateinit var dbHelper: DBHelper
+
+    // 界面是否已经加载好（"已登录跳过"那条路不会加载界面，onResume 里要用它判断）
+    private var contentReady = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val sp = getSharedPreferences("login_prefs", MODE_PRIVATE)
@@ -25,19 +29,15 @@ class Login : AppCompatActivity() {
         }
         //检查是否登录过，登录过就直接进入主界面，没有登录过就显示登录界面
         setContentView(R.layout.login)
+        contentReady = true
         dbHelper = DBHelper(this)
         val etAccount=findViewById<EditText>(R.id.etAccount)
         val etPassword=findViewById<EditText>(R.id.etPassword)
-        //找到密码框之后设置眼睛的状态变量
-        var passwordVisible = false
-        // 现在密码是"隐藏"状态
+
         val btnLogin=findViewById<Button>(R.id.btnLogin)
         val cbRememberPassword=findViewById<CheckBox>(R.id.cbRememberPassword)
-        cbRememberPassword.isChecked = !sp.getString("savedAccount", "").isNullOrEmpty()
-        // 之前记住过账号 → 复选框默认勾上
-        etAccount.setText(sp.getString("savedAccount", ""))
-        etPassword.setText(sp.getString("savedPassword", ""))
-        //勾选了就把记住的账号密码回填，否则默认填入空白
+
+        fillSavedAccount(etAccount, etPassword, cbRememberPassword)   // 首次进入先填一次
         btnLogin.setOnClickListener {
             val account=etAccount.text.toString().trim()
             val password=etPassword.text.toString().trim()
@@ -45,8 +45,8 @@ class Login : AppCompatActivity() {
                 Toast.makeText(this,"账号或密码不能为空", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            if (password.length<6){
-                Toast.makeText(this,"密码不能小于六位数字", Toast.LENGTH_SHORT).show()
+            if (account.length>12){
+                Toast.makeText(this,"账号不能大于12位", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             //检查账号密码是否与注册时一致，一致就储存账号密码并跳转到主界面
@@ -75,6 +75,9 @@ class Login : AppCompatActivity() {
 
         }
     //变换眼睛状态和密码可见状态
+        //找到密码框之后设置眼睛的状态变量
+        var passwordVisible = false
+        // 现在密码是"隐藏"状态
         val ivToggle = findViewById<ImageView>(R.id.ivTogglePassword)
         findViewById<ImageView>(R.id.ivTogglePassword).setOnClickListener {
             passwordVisible = !passwordVisible        // 翻转状态
@@ -102,5 +105,44 @@ class Login : AppCompatActivity() {
         //跳转到注册页的逻辑
         }
 
+    }
+
+    // 每次页面变可见都执行（从注册页返回时也会走这里）
+    override fun onResume() {
+        super.onResume()
+        if (!contentReady) return      // 走"已登录跳过"那条路时没有界面，直接返回
+
+        val etAccount = findViewById<EditText>(R.id.etAccount)
+        val etPassword = findViewById<EditText>(R.id.etPassword)
+        val cbRememberPassword = findViewById<CheckBox>(R.id.cbRememberPassword)
+        fillSavedAccount(etAccount, etPassword, cbRememberPassword)
+    }
+
+    // 把记住的账号密码回填到输入框（只在输入框为空时填，不覆盖用户正在打的字）
+    private fun fillSavedAccount(
+        etAccount: EditText,
+        etPassword: EditText,
+        cbRememberPassword: CheckBox
+    ) {
+        val sp = getSharedPreferences("login_prefs", MODE_PRIVATE)
+        val savedAccount = sp.getString("savedAccount", "") ?: ""
+        val savedPassword = sp.getString("savedPassword", "") ?: ""
+
+        // 刚从注册页回来 → 强制填成刚注册的账号密码
+        if (sp.getBoolean("justRegistered", false)) {
+            etAccount.setText(savedAccount)
+            etPassword.setText(savedPassword)
+            sp.edit().remove("justRegistered").apply()
+            cbRememberPassword.isChecked = true
+            return
+        }
+
+        if (etAccount.text.isNullOrEmpty() && savedAccount.isNotEmpty()) {
+            etAccount.setText(savedAccount)
+        }
+        if (etPassword.text.isNullOrEmpty() && savedPassword.isNotEmpty()) {
+            etPassword.setText(savedPassword)
+        }
+        cbRememberPassword.isChecked = savedAccount.isNotEmpty() && savedPassword.isNotEmpty()
     }
 }
