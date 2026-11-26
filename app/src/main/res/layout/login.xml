@@ -7,42 +7,78 @@
     android:layout_height="match_parent"
     tools:context=".Ui.Login">
 
+    <!-- 背景图 -->
+    <ImageView
+        android:id="@+id/ivBg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/login_picture2"
+        android:contentDescription="@null"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <!-- 白色薄纱：压一下背景细节，保证文字清楚 -->
+    <View
+        android:id="@+id/vScrim"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#1FFFFFFF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
     <TextView
         android:id="@+id/loginTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="120dp"
         android:text="登录"
-        android:textSize="35sp"
+        android:textSize="40sp"
+        android:letterSpacing="0.12"
+        android:fontFamily="serif"
         app:layout_constraintTop_toTopOf="parent"
         android:gravity="center"/>
 
     <EditText
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:id="@+id/etAccount"
-    android:hint="请输入账号"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:layout_marginStart="24dp"
-    android:layout_marginEnd="24dp"
-    app:layout_constraintTop_toBottomOf="@id/loginTitle"
-    android:layout_marginTop="40dp"/>
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:id="@+id/etAccount"
+        android:hint="请输入账号"
+        android:background="@drawable/bg_input"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:gravity="center_vertical"
+        android:maxLines="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        app:layout_constraintTop_toBottomOf="@id/loginTitle"
+        android:layout_marginTop="64dp"/>
 
     <EditText
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:id="@+id/etPassword"
         android:hint="请输入密码"
         android:inputType="textPassword"
+        android:background="@drawable/bg_input"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:gravity="center_vertical"
+        android:maxLines="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="28dp"
         android:layout_marginEnd="56dp"
         app:layout_constraintTop_toBottomOf="@id/etAccount"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="18dp"/>
 
     <ImageView
         android:id="@+id/ivTogglePassword"
@@ -64,23 +100,24 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@id/btnLogin"
         app:layout_constraintTop_toBottomOf="@id/etPassword"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="22dp"/>
 
 
     <Button
         android:id="@+id/btnLogin"
-        android:text="登录"
-        android:backgroundTint="#8BC34A"
-        android:textColor="#FFFFFF"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="42dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:backgroundTint="#8BC34A"
+        android:text="登录"
+        android:textColor="#FFFFFF"
+        app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintTop_toBottomOf="@id/cbRememberPassword"
-        android:layout_marginTop="24dp" />
-
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cbRememberPassword" />
 
     <TextView
         android:layout_width="0dp"
@@ -88,13 +125,13 @@
         android:id="@+id/toGoToRegister"
         android:text="还没有账号？注册一个吧！"
         android:textSize="14sp"
-        android:textColor="#888888"
+        android:textColor="#7A7A7A"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginEnd="28dp"
         app:layout_constraintTop_toBottomOf="@id/btnLogin"
-        android:layout_marginTop="12dp"/>
+        android:layout_marginTop="24dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
