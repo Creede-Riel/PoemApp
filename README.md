@@ -41,6 +41,10 @@
 
 ## 截图
 
+| 登录 | 注册 |
+|---|---|
+| ![登录](screenshots/login.png) | ![注册](screenshots/register.png) |
+
 | 首页（问候语 + 朝代筛选 + 今日推荐） | 发现（关键词搜索） |
 |---|---|
 | ![首页](screenshots/home_default.png) | ![发现](screenshots/find.png) |
