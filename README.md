@@ -18,7 +18,7 @@
   - 已登录自动跳过登录页
   - 退出登录（二次确认弹窗）
 - **主界面**
-  - 底部导航栏（首页 / 收藏 / 我的）
+  - 底部导航栏（首页 / 发现 / 收藏 / 我的，四项常显文字）
   - 今日推荐诗词卡片（按日期固定，每天一首）
   - **按朝代筛选**（标签行横滑选择，实时过滤列表）
   - **关键词搜索**（标题 / 作者 / 正文模糊匹配，边输入边出结果）
@@ -41,37 +41,21 @@
 
 ## 截图
 
-| 登录 | 注册 |
+| 首页（问候语 + 朝代筛选 + 今日推荐） | 发现（关键词搜索） |
 |---|---|
-| ![登录](screenshots/login.png) | ![注册](screenshots/register.png) |
+| ![首页](screenshots/home_default.png) | ![发现](screenshots/find.png) |
 
-| 首页（默认） | 按朝代筛选 |
+| 诗词详情（头图 + 原文 + 朗读/收藏） | 我的收藏 |
 |---|---|
-| ![首页](screenshots/home_default.png) | ![筛选](screenshots/filter.png) |
+| ![详情](screenshots/detail.png) | ![收藏](screenshots/favorite.png) |
 
-| 关键词搜索 | 详情页主题标签 |
+| 我的（昵称 / 改密码 / 关于 / 历史） | 浏览历史 |
 |---|---|
-| ![搜索](screenshots/search.png) | ![主题标签](screenshots/detail_tags.png) |
+| ![我的](screenshots/profile.png) | ![浏览历史](screenshots/history.png) |
 
-| 诗词详情 | 我的 |
+| 关于 | 退出登录（二次确认） |
 |---|---|
-| ![详情](screenshots/detail.png) | ![我的](screenshots/profile.png) |
-
-| 详情页收藏后 | 收藏列表 |
-|---|---|
-| ![收藏详情](screenshots/detail_fav.png) | ![收藏列表](screenshots/favorite.png) |
-
-| 浏览历史 | 历史为空（清空后） |
-|---|---|
-| ![浏览历史](screenshots/history.png) | ![历史为空](screenshots/history_empty.png) |
-
-| 密码可见切换 | 关于 |
-|---|---|
-| ![密码可见](screenshots/login_visible.png) | ![关于](screenshots/about.png) |
-
-| 退出登录（二次确认） | 诗词列表 |
-|---|---|
-| ![退出确认](screenshots/logout-dialog.png) | ![诗词列表](screenshots/list.png) |
+| ![关于](screenshots/about.png) | ![退出确认](screenshots/logout-dialog.png) |
 
 ---
 
@@ -147,6 +131,7 @@ app/src/main/
 | 2026-11-23 | 首页改版：搜索入口、动态问候语、按朝代筛选（ChipGroup） |
 | 2026-11-24 | 完成关键词搜索页（like 模糊查询，实时搜索）；详情页新增主题标签 |
 | 2026-11-26 | 修复注册重复提交与空用户名问题；登录页预填改为 onResume；补齐注册页输入提示与密码可见切换 |
+| 2026-11-27 | 界面美化：登录/注册青绿底图、各页淡色背景、详情页头图、卡片改纯白、新增发现页 |
 
 ---
 
