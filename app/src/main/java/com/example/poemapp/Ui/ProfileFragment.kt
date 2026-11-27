@@ -9,6 +9,8 @@ import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.GridLayout
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -31,6 +33,94 @@ class ProfileFragment : Fragment(R.layout.fragment_profile){
         val nickname = db.getNickname(username)          // ① 查昵称的方法
         tvUsername.text = if (nickname.isEmpty()) username else nickname // ② 空就用账号
         tvAccount.text = "账号 · ${sp.getString("currentUser", "")}"
+
+
+        // 显示头像
+        val avatarName = db.getAvatar(username)          // "avatar_3" 或 ""
+        val name = if (avatarName.isEmpty()) "avatar_1" else avatarName
+        val resId = resources.getIdentifier(name, "drawable", requireContext().packageName)
+        val ivAvatar = view.findViewById<ImageView>(R.id.ivAvatar)
+        ivAvatar.setImageResource(if (resId != 0) resId else R.drawable.avatar_1)
+
+        view.findViewById<androidx.cardview.widget.CardView>(R.id.cardAvatar).setOnClickListener {
+            val avatarNames = listOf(
+                "avatar_1", "avatar_2", "avatar_3",
+                "avatar_4", "avatar_5", "avatar_6"
+            )
+            val density = resources.displayMetrics.density
+            val size = (76 * density).toInt()
+            val gap = (10 * density).toInt()
+            val stroke = (3 * density).toInt()
+
+            var selectedName = if (avatarName.isEmpty()) "avatar_1" else avatarName
+            val cards = mutableListOf<com.google.android.material.card.MaterialCardView>()
+
+            val grid = GridLayout(requireContext())
+            grid.columnCount = 3
+            grid.setPadding(gap, gap, gap, gap)
+
+            var dialog: androidx.appcompat.app.AlertDialog? = null
+
+            // 统一刷新描边：只有选中的那个画框
+            fun refreshStroke() {
+                cards.forEachIndexed { index, card ->
+                    if (avatarNames[index] == selectedName) {
+                        card.strokeWidth = stroke
+                        card.strokeColor = android.graphics.Color.parseColor("#7CB342")
+                    } else {
+                        card.strokeWidth = 0
+                    }
+                }
+            }
+
+            avatarNames.forEach { name ->
+                val card = com.google.android.material.card.MaterialCardView(requireContext())
+                val lp = GridLayout.LayoutParams()
+                lp.width = size
+                lp.height = size
+                lp.setMargins(gap, gap, gap, gap)
+                card.layoutParams = lp
+                card.radius = size / 2f
+                card.cardElevation = 0f
+                card.strokeWidth = 0
+
+                val iv = ImageView(requireContext())
+                iv.layoutParams = android.widget.FrameLayout.LayoutParams(
+                    android.widget.FrameLayout.LayoutParams.MATCH_PARENT,
+                    android.widget.FrameLayout.LayoutParams.MATCH_PARENT
+                )
+                iv.scaleType = ImageView.ScaleType.CENTER_CROP
+                val rid = resources.getIdentifier(name, "drawable", requireContext().packageName)
+                if (rid != 0) iv.setImageResource(rid)
+
+                iv.setOnClickListener {
+                    selectedName = name     // 只记下，不写库
+                    refreshStroke()
+                }
+
+                card.addView(iv)
+                grid.addView(card)
+                cards.add(card)
+            }
+
+            refreshStroke()   // 进来先给当前头像画框
+
+            // 直接换成 AlertDialog（带确定/取消）
+            dialog = androidx.appcompat.app.AlertDialog.Builder(requireContext())
+                .setTitle("选择头像")
+                .setView(grid)
+                .setPositiveButton("确定") { _, _ ->
+                    db.updateAvatar(username, selectedName)      // 现在才写库
+                    val rid = resources.getIdentifier(selectedName, "drawable", requireContext().packageName)
+                    ivAvatar.setImageResource(if (rid != 0) rid else R.drawable.avatar_1)
+                    Toast.makeText(requireContext(), "头像已更换", Toast.LENGTH_SHORT).show()
+                }
+                .setNegativeButton("取消", null)
+                .create()
+            dialog.show()
+        }
+
+
         //退出登录键加弹窗防误触
         val btnLogout = view.findViewById<Button>(R.id.btnLogOut)
         btnLogout.setOnClickListener {
@@ -45,6 +135,7 @@ class ProfileFragment : Fragment(R.layout.fragment_profile){
                 .setNegativeButton("取消", null)
                 .show()
              }
+
 
         //点击历史记录跳转到浏览记录界面
         view.findViewById<TextView>(R.id.tvHistory).setOnClickListener {

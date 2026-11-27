@@ -23,7 +23,7 @@ import java.util.Locale
 private lateinit var db: DBHelper
 
 class DBHelper(context: Context) :
-    SQLiteOpenHelper(context, "poem.db", null, 4) {
+    SQLiteOpenHelper(context, "poem.db", null, 5) {
 
     // ==================== 建表语句 ====================
 
@@ -33,7 +33,8 @@ class DBHelper(context: Context) :
             id integer primary key autoincrement,
             username text,
             password text,
-            nickname text      
+            nickname text,
+            avatar text      
         )
     """.trimIndent()
 
@@ -100,6 +101,9 @@ class DBHelper(context: Context) :
         //版本3 -> 4，给用户表加上昵称列
         if (oldVersion < 4) {
             db.execSQL("alter table users add column nickname text")
+        }
+        if (oldVersion < 5) {
+            db.execSQL("alter table users add column avatar text")
         }
     }
 
@@ -171,6 +175,25 @@ class DBHelper(context: Context) :
     fun updateNickname(username: String, nickname: String) {
         val values = ContentValues().apply {
             put("nickname", nickname)
+        }
+        writableDatabase.update("users", values, "username = ?", arrayOf(username))
+    }
+
+    //查头像（没设置过就返回空字符串）
+    fun getAvatar(username: String): String {
+        val cursor = readableDatabase.query(
+            "users", arrayOf("avatar"), "username = ?", arrayOf(username), null, null, null
+        )
+        cursor.use { c ->
+            if (!c.moveToFirst()) return ""
+            return c.getString(c.getColumnIndexOrThrow("avatar")) ?: ""
+        }
+    }
+
+    //改头像
+    fun updateAvatar(username: String, avatarName: String) {
+        val values = ContentValues().apply {
+            put("avatar", avatarName)
         }
         writableDatabase.update("users", values, "username = ?", arrayOf(username))
     }

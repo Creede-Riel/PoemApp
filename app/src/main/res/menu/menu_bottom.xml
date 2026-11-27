@@ -3,25 +3,22 @@
 
     <item
         android:id="@+id/tabHome"
-        android:icon="@android:drawable/ic_menu_view"
+        android:icon="@drawable/ic_nav_home"
         android:title="首页" />
 
     <item
         android:id="@+id/tabFind"
-        android:icon="@android:drawable/ic_menu_search"
-        android:title="发现"
-        />
+        android:icon="@drawable/ic_nav_search"
+        android:title="发现" />
 
     <item
         android:id="@+id/tabFavorite"
-        android:icon="@android:drawable/ic_menu_myplaces"
+        android:icon="@drawable/ic_nav_star"
         android:title="收藏" />
 
     <item
         android:id="@+id/tabProfile"
-        android:icon="@android:drawable/ic_menu_manage"
-        android:title="我的"/>
-
-
+        android:icon="@drawable/ic_nav_person"
+        android:title="我的" />
 
 </menu>
