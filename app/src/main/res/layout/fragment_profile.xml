@@ -5,6 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/ivPageBg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:alpha="0.5"
+        android:src="@drawable/login_picture3"
+        android:contentDescription="@null"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <!-- 头像：先用绿色方块占位，以后换真图片 -->
     <View
         android:id="@+id/ivAvatar"
@@ -182,7 +195,7 @@
         android:id="@+id/btnLogOut"
         android:text="退出登录"
         android:textSize="16sp"
-        android:backgroundTint="#F81E18"
+        android:backgroundTint="#BFF81E18"
         android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

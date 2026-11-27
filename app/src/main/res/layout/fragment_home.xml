@@ -4,26 +4,56 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7FAF9">
-    <!-- 整个布局只放置每日诗词卡片，一个标题和一个滑动列表，再加一个搜索框  -->
+    android:background="#F2FFFFFF"  >
 
 
 
+    <ImageView
+        android:id="@+id/ivPageBg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:alpha="0.5"
+        android:src="@drawable/bgpic3"
+        android:contentDescription="@null"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/cardDaily"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="150dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginTop="16dp"
-        android:background="#F1F8E9"
-        android:orientation="vertical"
-        android:padding="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/chipGroup">
+
+    <!-- 第 1 层：底图 -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/login_picture3" />
+
+    <!-- 第 2 层：白纱（让文字看得清） -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#59FFFFFF" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -62,38 +92,25 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/ivHomeBanner"
-        android:layout_width="0dp"
-        android:layout_height="88dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/bgpic2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="32dp"
-        android:background="@drawable/fade_bottom"
-        app:layout_constraintBottom_toBottomOf="@id/ivHomeBanner"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/tvGreeting"
         android:text="你好"
+        android:letterSpacing="0.12"
+        android:fontFamily="serif"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="16dp"
+        android:layout_marginTop="18dp"
         android:textColor="#2A2A2A"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/ivHomeBanner"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/chipGroup"
@@ -122,5 +139,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cardDaily"
         app:layout_constraintBottom_toBottomOf="parent" />
-    <!-- 高宽都是零，列表占据处理标题以外的所有空间  -->
+
 </androidx.constraintlayout.widget.ConstraintLayout>
