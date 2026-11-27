@@ -2,7 +2,42 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#F7FAF9">
+
+    <!-- 顶部 banner -->
+    <ImageView
+        android:id="@+id/ivBanner"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bgpic2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- 下沿渐隐（压在 banner 底部 28dp 上） -->
+    <View
+        android:layout_width="0dp"
+        android:layout_height="28dp"
+        android:background="@drawable/fade_bottom"
+        app:layout_constraintBottom_toBottomOf="@id/ivBanner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- banner 上的文字 -->
+    <TextView
+        android:id="@+id/tvBannerTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="收藏"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="#2A2A2A"
+        app:layout_constraintBottom_toBottomOf="@id/ivBanner"
+        app:layout_constraintTop_toTopOf="@id/ivBanner"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tvEmpty"
@@ -22,7 +57,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:paddingTop="16dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivBanner"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
